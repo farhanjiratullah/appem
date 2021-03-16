@@ -15,6 +15,14 @@ class Petugas
      */
     public function handle($request, Closure $next)
     {
+        if( !Auth()->guard('petugas')->check() ) {
+            return redirect()->to('/petugas/login');
+        }
+
+        if( !Auth()->guard('petugas')->user()->level == 'petugas' ) {
+            return redirect()->to('/petugas/login');
+        }
+        
         return $next($request);
     }
 }

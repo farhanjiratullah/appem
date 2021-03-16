@@ -23,10 +23,8 @@
         </div> --}}
     
         <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
-        <hr>
-        <div class="form-group text-center">
-            <a href="/register" class="text-decoration-none">Registrasi</a>
-        </div>
+        <div class="separator mt-2 mb-3">Belum punya akun?</div>
+        <a href="/register" class="text-decoration-none">Register</a>
       </form>
 </main>
 @endsection

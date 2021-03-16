@@ -11,5 +11,9 @@ class Masyarakat extends Authenticatable
     protected $fillable = ['nama', 'username', 'password', 'telp'];
     protected $primaryKey = 'nik';
     protected $guard = 'masyarakat';
-    protected $hidden = 'password';
+    protected $hidden = ['password'];
+
+    public function pengaduans() {
+        return $this->hasMany('App\Pengaduan');
+    }
 }

@@ -15,6 +15,14 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
+         if( !Auth()->guard('admin')->check() ) {
+            return redirect()->to('/admin/login');
+        }
+
+        if( !Auth()->guard('admin')->user()->level == 'admin' ) {
+            return redirect()->to('/admin/login');
+        }
+
         return $next($request);
     }
 }

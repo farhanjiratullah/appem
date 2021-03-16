@@ -40,6 +40,25 @@
           font-size: 3.5rem;
         }
       }
+
+      .separator {
+        text-align: center;
+        height: .8em;
+        border-bottom: 1px solid #C0C1C2;
+        margin-bottom: 0.5em;
+      }
+
+      .separator:first-line {
+        background-color: #F5F5F5;
+      }
+      .separator:before {
+        content: "__";
+        color: #F5F5F5;
+      }
+      .separator:after {
+        content: "__";
+        color: #F5F5F5;
+      }
     </style>
 
     

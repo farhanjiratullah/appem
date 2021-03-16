@@ -8,7 +8,7 @@
         @csrf
         
         {{-- <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> --}}
-        <h1 class="h3 mb-3 fw-normal">Aplikasi Pengaduan Masyarakat</h1>
+        <h1 class="h3 mb-3 fw-normal">Register</h1>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -17,7 +17,7 @@
         @endif
     
         <label for="nik" class="visually-hidden">NIK</label>
-        <input type="text" name="nik" id="nik" class="form-control {{ $errors->has('nik') ? 'is-invalid' : '' }}" placeholder="NIK" value="{{ old('nik') }}" required autofocus>
+        <input type="text" name="nik" id="nik" class="form-control {{ $errors->has('nik') ? 'is-invalid' : '' }}" placeholder="NIK" value="{{ old('nik') }}" required autofocus autocomplete="off">
         @if ($errors->has('nik'))
             <div class="invalid-feedback">
                 {{ $errors->first('nik') }}
@@ -25,7 +25,7 @@
         @endif
 
         <label for="nama" class="visually-hidden">Nama</label>
-        <input type="text" name="nama" id="nama" class="form-control {{ $errors->has('nama') ? 'is-invalid' : '' }}" placeholder="Nama" value="{{ old('nama') }}" required>
+        <input type="text" name="nama" id="nama" class="form-control {{ $errors->has('nama') ? 'is-invalid' : '' }}" placeholder="Nama" value="{{ old('nama') }}" required autocomplete="off">
         @if ($errors->has('nama'))
             <div class="invalid-feedback">
                 {{ $errors->first('nama') }}
@@ -33,7 +33,7 @@
         @endif
 
         <label for="username" class="visually-hidden">Username</label>
-        <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="Username"  value="{{ old('username') }}" required>
+        <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="Username"  value="{{ old('username') }}" required autocomplete="off">
         @if ($errors->has('username'))
         <div class="invalid-feedback">
             {{ $errors->first('username') }}
@@ -57,7 +57,7 @@
         @endif
 
         <label for="telp" class="visually-hidden">Telp</label>
-        <input type="text" name="telp" id="telp" class="form-control {{ $errors->has('telp') ? 'is-invalid' : '' }}" placeholder="Telp" value="{{ old('telp') }}" required>
+        <input type="text" name="telp" id="telp" class="form-control {{ $errors->has('telp') ? 'is-invalid' : '' }}" placeholder="Telp" value="{{ old('telp') }}" required autocomplete="off">
         @if ($errors->has('telp'))
         <div class="invalid-feedback">
             {{ $errors->first('telp') }}
@@ -71,7 +71,8 @@
         </div> --}}
     
         <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Register</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-      </form>
+        <div class="separator mt-2 mb-3">Sudah punya akun?</div>
+        <a href="/login" class="text-decoration-none mt-5">Login</a>
+    </form>
 </main>
 @endsection

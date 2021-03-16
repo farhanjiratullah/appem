@@ -5,7 +5,7 @@
 @section('content')
 <main class="form-signin">
     <div class="col-md-6">
-    <form action="{{ route('masyarakat.pengaduan') }}" method="post">
+    <form action="{{ route('masyarakat.pengaduan') }}" method="post" enctype="multipart/form-data">
         @csrf
         
         {{-- <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> --}}
@@ -17,31 +17,17 @@
             </div>
         @endif
 
-        <label for="tanggal_pengaduan" class="visually-hidden">Tanggal Pengaduan</label>
-        <input type="text" name="tanggal_pengaduan" id="tanggal_pengaduan" class="form-control {{ $errors->has('tanggal_pengaduan') ? 'is-invalid' : '' }}" placeholder="Tanggal Pengaduan" value="{{ date('y-m-d') }}" required readonly>
-        @if ($errors->has('tanggal_pengaduan'))
-            <div class="invalid-feedback">
-                {{ $errors->first('tanggal_pengaduan') }}
-            </div>
-        @endif
-    
-        <label for="masyarakat_nik" class="visually-hidden">Masyarakat NIK</label>
-        <input type="text" name="masyarakat_nik" id="masyarakat_nik" class="form-control {{ $errors->has('masyarakat_nik') ? 'is-invalid' : '' }}" placeholder="Masyarakat NIK" value="{{ Auth()->guard('masyarakat')->user()->nik }}" required readonly>
-        @if ($errors->has('masyarakat_nik'))
-            <div class="invalid-feedback">
-                {{ $errors->first('masyarakat_nik') }}
-            </div>
-        @endif
+        <input type="hidden" name="tanggal_pengaduan" id="tanggal_pengaduan" class="form-control {{ $errors->has('tanggal_pengaduan') ? 'is-invalid' : '' }} mb-3" placeholder="Tanggal Pengaduan" value="{{ Carbon\Carbon::now('+07:00') }}">
 
-        <label for="isi_laporan" class="visually-hidden">Isi Laporan</label>
-        <textarea type="text" name="isi_laporan" id="isi_laporan" class="form-control {{ $errors->has('isi_laporan') ? 'is-invalid' : '' }}" placeholder="Isi Laporan" required>{{ old('isi_laporan') }}</textarea>
+        <label for="isi_laporan" class="form-label">Isi Laporan</label>
+        <textarea name="isi_laporan" id="isi_laporan" class="form-control {{ $errors->has('isi_laporan') ? 'is-invalid' : '' }} mb-3" placeholder="Isi Laporan" required rows="5">{{ old('isi_laporan') }}</textarea>
         @if ($errors->has('isi_laporan'))
         <div class="invalid-feedback">
             {{ $errors->first('isi_laporan') }}
         </div>
         @endif
     
-        <label for="foto" class="visually-hidden">Foto</label>
+        <label for="foto" class="form-label">Foto</label>
         <input type="file" name="foto" id="foto" class="form-control {{ $errors->has('foto') ? 'is-invalid' : '' }}" placeholder="Foto" required>
         @if ($errors->has('foto'))
         <div class="invalid-feedback">
