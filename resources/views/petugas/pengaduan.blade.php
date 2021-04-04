@@ -6,12 +6,6 @@
 
     <h1 class="mb-4 text-center">Pengaduan - Pengaduan Masyarakat</h1>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -36,13 +30,39 @@
                       <a href="{{ route('petugas.detailpengaduan', $pengaduan->id) }}" class="btn btn-info btn-sm">
                         <span data-feather="clipboard"></span> Detail 
                       </a>
-                      <a href="{{ route('petugas.destroypengaduan', $pengaduan->id) }}" class="btn btn-danger btn-sm">
-                        <span data-feather="trash"></span> Hapus 
-                      </a>
+                      <form action="{{ route('petugas.destroypengaduan', $pengaduan->id) }}" method="post" id="delete{{ $pengaduan->id }}" class="d-inline">
+                        @csrf
+                        @method('delete')
+
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $pengaduan->id }})">
+                          <span data-feather="trash"></span> Hapus 
+                        </button>
+                      </form>
                     </td>
                 </tr>               
             @endforeach
           </tbody>
         </table>
       </div>
+@endsection
+
+@section('sweet')
+
+   function deleteData(id){
+      Swal.fire({
+        title: 'PERINGATAN!',
+        text: "Yakin ingin menghapus pengaduan ini?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yakin',
+        cancelButtonText: 'Batal',
+    }).then((result) => {
+        if (result.value) {
+              $('#delete'+id).submit();
+          }
+        })
+   }
+   
 @endsection

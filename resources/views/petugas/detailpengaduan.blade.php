@@ -44,17 +44,25 @@
             <div class="d-flex justify-content-between">
                 <form action="{{ route('petugas.statusOnChange', $data_pengaduan->id) }}" method="post">
                     @csrf
-                    <select name="status" class="form-select w-100" onchange="javascript:this.form.submit()">
-                        <option value="0" @if ($data_pengaduan->status == 0) selected @endif>Belum divalidasi</option>
+                    <select name="status" class="form-select w-100" onchange="javascript:this.form.submit()">   
+                        @if( $data_pengaduan->status == 'selesai' )
+                            <option value="selesai" selected>Verifikasi</option>                            
+                        @else
+                            <option value="0" @if ($data_pengaduan->status == 0) selected @endif>Belum divalidasi</option>
+                            <option value="proses" @if ($data_pengaduan->status == 'proses') selected @endif>Validasi</option>
+                            <option value="selesai" class="d-none">Verifikasi</option>
+                        @endif
+                        
+                        {{-- <option value="0" @if ($data_pengaduan->status == 0) selected @endif>Belum divalidasi</option>
                         <option value="proses" @if ($data_pengaduan->status == 'proses') selected @endif>Validasi</option>
-                        <option value="selesai" @if ($data_pengaduan->status == 'selesai') selected @endif>Verifikasi</option>
+                        <option value="selesai" @if ($data_pengaduan->status == 'selesai') selected @endif>Verifikasi</option> --}}
                     </select>
                 </form>
 
-                @if( $data_pengaduan->status == 'proses' || $data_pengaduan->status == 'selesai' )
-                    <a href="/petugas/detailpengaduan/{{ $data_pengaduan->id }}/tanggapi" class="btn btn-primary">Tanggapi</a>
+                @if( $data_pengaduan->status == 'proses' )
+                    <a href="/petugas/pengaduan/{{ $data_pengaduan->id }}/tanggapi" class="btn btn-primary">Tanggapi</a>
                 @else
-                    <a href="/petugas/detailpengaduan/{{ $data_pengaduan->id }}/tanggapi" class="btn btn-primary d-none">Tanggapi</a>
+                    <a href="/petugas/pengaduan/{{ $data_pengaduan->id }}/tanggapi" class="btn btn-primary d-none">Tanggapi</a>
                 @endif
 
             </div>

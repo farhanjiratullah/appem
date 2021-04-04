@@ -12,7 +12,7 @@
             <h1 class="h3 mb-3">Register Admin & Petugas</h1>
 
             <div class="mb-2">
-                <a href="/admin/akun">
+                <a href="/admin/akun-petugas">
                     <span data-feather="arrow-left-circle" style="width: 32px; height: 32px;"></span>
                 </a>
             </div>

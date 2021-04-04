@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{Pengaduan, Masyarakat, Tanggapan, Petugas};
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PetugasController extends Controller
 {
     public function index() {
         $data_pengaduan = Pengaduan::get();
         $data_masyarakat = Masyarakat::get();
-        return view('petugas.index', compact('data_pengaduan', 'data_masyarakat'));
+        $data_petugas = Petugas::get();
+        return view('petugas.index', compact('data_pengaduan', 'data_masyarakat', 'data_petugas'));
     }
 
     public function tampilPengaduan() {
@@ -29,7 +31,8 @@ class PetugasController extends Controller
     public function destroyPengaduan($id) {
         $data_pengaduan = Pengaduan::with('masyarakat')->find($id);
         $data_pengaduan->delete();
-        return redirect()->back()->with('success', 'Data pengaduan berhasil dihapus!');
+        Alert::success('Berhasil!', 'Data pengaduan berhasil dihapus!');
+        return redirect()->back();
     }
 
     public function statusOnChange($id) {
@@ -50,13 +53,15 @@ class PetugasController extends Controller
     }
 
     public function destroyAkunMasyarakat($nik) {
-        $data_akunMasyarakat = Masyarakat::find($nik);
+        $data_akunMasyarakat = Masyarakat::with('pengaduans')->find($nik);
         $data_akunMasyarakat->delete();
-        return redirect()->back()->with('success', 'Data Masyarakat berhasil dihapus!');
+        Alert::success('Berhasil', 'Data Masyarakat berhasil dihapus!');
+        return redirect()->back();
     }
 
     public function logout() {
         Auth()->guard('petugas')->logout();
+        Alert::success('Berhasil', 'Anda telah logout!');
         return redirect()->to('/petugas/login');
     }
 }

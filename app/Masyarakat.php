@@ -16,4 +16,15 @@ class Masyarakat extends Authenticatable
     public function pengaduans() {
         return $this->hasMany('App\Pengaduan');
     }
+
+    // this is the recommended way for declaring event handlers
+    public static function boot() {
+        parent::boot();
+        self::deleting(function($masyarakat) { // before delete() method call this
+            $masyarakat->pengaduans()->each(function($pengaduan) {
+                $pengaduan->delete(); // <-- direct deletion
+            });
+            // do the rest of the cleanup...
+        });
+    }
 }

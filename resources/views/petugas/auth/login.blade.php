@@ -24,6 +24,8 @@
         </div> --}}
     
         <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+        <hr>
+        <a href="/admin/login" class="text-decoration-none">Login sebagai admin</a>
       </form>
 </main>
 @endsection

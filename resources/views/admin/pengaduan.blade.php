@@ -12,7 +12,7 @@
         </div>
     @endif
 
-    <a href="{{ route('admin.pdf') }}" class="btn btn-primary mb-3"><span data-feather="download" style="width: 24px; height: 24px;"></span> Generate Laporan</a>
+    <a href="{{ route('admin.pdf') }}" class="btn btn-primary mb-3" target="_blank"><span data-feather="download" style="width: 24px; height: 24px;"></span> Generate Laporan</a>
 
     <div class="table-responsive">
       <table class="table table-striped table-sm">

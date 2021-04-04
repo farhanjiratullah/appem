@@ -20,6 +20,7 @@ class CreateTanggapansTable extends Migration
             $table->string('tanggapan');
             $table->unsignedBigInteger('petugas_id')->references('id')->on('petugas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

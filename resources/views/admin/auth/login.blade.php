@@ -24,6 +24,8 @@
         </div> --}}
     
         <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+        <hr>
+        <a href="/petugas/login" class="text-decoration-none">Login sebagai petugas</a>
       </form>
 </main>
 @endsection
