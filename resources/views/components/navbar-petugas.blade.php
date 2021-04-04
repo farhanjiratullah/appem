@@ -14,13 +14,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/petugas/akun">
+            <a class="nav-link" aria-current="page" href="/petugas/akun-petugas">
               <span data-feather="users"></span>
               Akun Admin & Petugas
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/petugas/akunMasyarakat">
+            <a class="nav-link" aria-current="page" href="/petugas/akun-masyarakat">
               <span data-feather="users"></span>
               Akun Masyarakat
             </a>

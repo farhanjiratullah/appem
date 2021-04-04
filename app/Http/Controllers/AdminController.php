@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{Masyarakat, Pengaduan, Petugas, Tanggapan};
 use PDF;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
     public function index() {
         $data_pengaduan = Pengaduan::get();
         $data_masyarakat = Masyarakat::get();
-        return view('admin.index', compact('data_pengaduan', 'data_masyarakat'));
+        $data_petugas = Petugas::get();
+        return view('admin.index', compact('data_pengaduan', 'data_masyarakat', 'data_petugas'));
     }
 
     public function tampilPengaduan() {
@@ -30,9 +33,10 @@ class AdminController extends Controller
     // cetak laporan
     public function cetakpdf() {
         $data_pengaduan = Pengaduan::with('masyarakat')->get();
-        $pdf = PDF::loadView('admin.pdf', compact('data_pengaduan'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('admin.pdf', compact('data_pengaduan'))->setPaper('a4', 'portrait');
+        $file_name = 'laporan-pengaduan-masyarakat.pdf';
         
-        return $pdf->download();
+        return $pdf->stream($file_name);
     }
 
     public function detailpdf($id) {
@@ -41,8 +45,9 @@ class AdminController extends Controller
             $query->where('pengaduan_id', request()->route('id'));
         })->with('petugas')->first();
         $pdf = PDF::loadView('admin.detailpdf', compact('data_pengaduan', 'data_tanggapan'))->setPaper('a4', 'portrait');
+        $file_name = 'detail-laporan-pengaduan-masyarakat.pdf';
         
-        return $pdf->download();
+        return $pdf->stream($file_name);
     }
 
     public function tampilAkun() {
@@ -59,7 +64,7 @@ class AdminController extends Controller
 
         $this->validate($request, [
             'nama_petugas' => 'required|min:4',
-            'username' => 'required|min:4:unique:petugas',
+            'username' => 'required|min:4|unique:petugas',
             'password' => 'required|min:6|confirmed',
             'telp' => 'required|digits_between:10,13',
             'level' => 'required'
@@ -67,18 +72,20 @@ class AdminController extends Controller
 
         $data_petugas->nama_petugas = request()->get('nama_petugas');
         $data_petugas->username = request()->get('username');
-        $data_petugas->password = bcrypt(request()->get('password'));
+        $data_petugas->password = Hash::make(request()->get('password'));
         $data_petugas->telp = request()->get('telp');
         $data_petugas->level = request()->get('level');
         $data_petugas->save();
 
-        return redirect()->to('/admin/akun')->with('success', 'Sukses register akun!');
+        Alert::success('Berhasil!', 'Sukses register akun petugas!');
+        return redirect()->back();
     }
 
     public function destroyAkun($id) {
         $data_akun = Petugas::find($id);
         $data_akun->delete();
-        return redirect()->back()->with('success', 'Data petugas berhasil dihapus!');
+        Alert::success('Berhasil!', 'Data petugas berhasil dihapus!');
+        return redirect()->back();
     }
 
     public function tampilAkunMasyarakat() {
@@ -87,13 +94,15 @@ class AdminController extends Controller
     }
 
     public function destroyAkunMasyarakat($nik) {
-        $data_akunMasyarakat = Masyarakat::find($nik);
+        $data_akunMasyarakat = Masyarakat::with('pengaduans')->find($nik);
         $data_akunMasyarakat->delete();
-        return redirect()->back()->with('success', 'Data Masyarakat berhasil dihapus!');
+        Alert::success('Berhasil!', 'Data masyarakat berhasil dihapus!');
+        return redirect()->back();
     }
 
     public function logout() {
         Auth()->guard('admin')->logout();
+        Alert::success('Berhasil!', 'Anda telah logout!');
         return redirect()->to('/admin/login');
     }
 }

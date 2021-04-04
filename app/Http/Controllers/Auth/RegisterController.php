@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\{Masyarakat, Petugas};
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -27,11 +29,12 @@ class RegisterController extends Controller
         $data_masyarakat->nik = request()->get('nik');
         $data_masyarakat->nama = request()->get('nama');
         $data_masyarakat->username = request()->get('username');
-        $data_masyarakat->password = bcrypt(request()->get('password'));
+        $data_masyarakat->password = Hash::make(request()->get('password'));
         $data_masyarakat->telp = request()->get('telp');
         $data_masyarakat->save();
 
-        return redirect()->to('/register')->with('success', 'Sukses registrasi akun!');
+        Alert::success('Berhasil!', 'Sukses Register Akun');
+        return redirect()->to('/register');
     }
 
     // Register Admin & Petugas

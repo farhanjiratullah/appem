@@ -5,7 +5,7 @@
 @section('content')
     <h1 class="mb-3">Detail Pengaduan</h1>
 
-    <a href="{{ route('admin.detailpdf', $data_pengaduan->id) }}" class="btn btn-primary mb-3"><span data-feather="download" style="width: 24px; height: 24px;"></span> Generate Laporan</a>
+    <a href="{{ route('admin.detailpdf', $data_pengaduan->id) }}" class="btn btn-primary mb-3" target="_blank"><span data-feather="download" style="width: 24px; height: 24px;"></span> Generate Laporan</a>
 
     <div class="card mb-3" style="width: 24rem;">
         <div class="card-header">

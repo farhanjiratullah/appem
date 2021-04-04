@@ -8,13 +8,8 @@
         @csrf
         
         {{-- <img class="mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> --}}
-        <h1 class="h3 mb-3 fw-normal">Register</h1>
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+        <h1 class="h3 mb-3 fw-normal">Register Masyarakat</h1>
     
         <label for="nik" class="visually-hidden">NIK</label>
         <input type="text" name="nik" id="nik" class="form-control {{ $errors->has('nik') ? 'is-invalid' : '' }}" placeholder="NIK" value="{{ old('nik') }}" required autofocus autocomplete="off">

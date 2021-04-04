@@ -5,12 +5,6 @@
 @section('content')
     <h1 class="mb-3 text-center">Akun Masyarakat</h1>   
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="table-responsive">
       <table class="table table-striped table-sm">
         <thead>
@@ -32,13 +26,39 @@
                   <td>{{ $akun->username }}</td>
                   <td>{{ $akun->telp }}</td>
                   <td>
-                    <a href="{{ route('admin.destroyakunmasyarakat', $akun->nik) }}" class="btn btn-danger btn-sm">
-                        <span data-feather="trash"></span> Hapus 
-                    </a>
+                    <form action="{{ route('admin.destroyakunmasyarakat', $akun->nik) }}" method="post" id="delete{{ $akun->nik }}">
+                      @csrf
+                      @method('delete')
+
+                      <button type="button" href="" class="btn btn-danger btn-sm" onclick="deleteData({{ $akun->nik }})">
+                          <span data-feather="trash"></span> Hapus 
+                      </button>
+                    </form>
                   </td>
               </tr>               
           @endforeach
         </tbody>
       </table>
     </div>
+@endsection
+
+@section('sweet')
+
+   function deleteData(nik){
+      Swal.fire({
+        title: 'PERINGATAN!',
+        text: "Yakin ingin menghapus akun masyarakat?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yakin',
+        cancelButtonText: 'Batal',
+    }).then((result) => {
+        if (result.value) {
+              $('#delete'+nik).submit();
+          }
+        })
+   }
+   
 @endsection

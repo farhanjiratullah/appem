@@ -7,6 +7,7 @@ use App\{Pengaduan, Masyarakat, Tanggapan, Petugas};
 use Image;
 use File;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MasyarakatController extends Controller
 {
@@ -41,7 +42,8 @@ class MasyarakatController extends Controller
         $data_pengaduan->foto = $filename;
         $data_pengaduan->save();
 
-        return redirect()->back()->with('success', 'Pengaduan berhasil dilaporkan');
+        Alert::success('Berhasil!', 'Pengaduan berhasil dilaporkan!');
+        return redirect()->back();
     }
 
     public function laporanku() {
@@ -59,6 +61,7 @@ class MasyarakatController extends Controller
 
     public function logout() {
         Auth()->guard('masyarakat')->logout();
+        Alert::success('Berhasil!', 'Anda telah logout!');
         return redirect()->to('/login');
     }
 }

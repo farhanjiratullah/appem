@@ -8,19 +8,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/admin/pengaduan">
+            <a class="nav-link" href="/admin/pengaduan">
               <span data-feather="message-circle"></span>
               Pengaduan
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/admin/akun">
+            <a class="nav-link" href="/admin/akun-petugas">
               <span data-feather="users"></span>
               Akun Admin & Petugas
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/admin/akunMasyarakat">
+            <a class="nav-link" href="/admin/akun-masyarakat">
               <span data-feather="users"></span>
               Akun Masyarakat
             </a>

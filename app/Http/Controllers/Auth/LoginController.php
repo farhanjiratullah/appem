@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\{Masyarakat, Petugas};
 
 class LoginController extends Controller
 {
@@ -18,6 +20,7 @@ class LoginController extends Controller
         if( Auth()->guard('masyarakat')->attempt($auth) ) {
             return redirect()->to('/');
         } else {
+            Alert::error('Gagal!', 'Username atau Password anda salah!');
             return redirect()->to('/login');
         }
     }
@@ -34,9 +37,11 @@ class LoginController extends Controller
             if( Auth()->guard('petugas')->user()->level == 'petugas' ) {
                 return redirect()->to('/petugas');
             } else {
+                Alert::error('Gagal!', 'Anda bukan petugas!');
                 return redirect()->to('/petugas/login');
             }
         } else {
+            Alert::error('Gagal!', 'Username atau Password anda salah!');
             return redirect()->to('/petugas/login');
         }
     }
@@ -53,9 +58,11 @@ class LoginController extends Controller
             if( Auth()->guard('admin')->user()->level == 'admin' ) {
                 return redirect()->to('/admin');
             } else {
+                Alert::error('Gagal!', 'Anda bukan admin!');
                 return redirect()->to('/admin/login');
             }
         } else {
+            Alert::error('Gagal!', 'Username atau Password anda salah!');
             return redirect()->to('/admin/login');
         }
     }

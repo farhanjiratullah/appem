@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{Pengaduan, Masyarakat, Tanggapan};
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TanggapanController extends Controller
 {
     public function formTanggapan($id) {
         $detail_pengaduan = Pengaduan::with('masyarakat')->find($id);
+        // return $detail_pengaduan;
         return view('petugas.tanggapi', compact('detail_pengaduan'));
     }
 
@@ -26,6 +28,7 @@ class TanggapanController extends Controller
         $data_pengaduan->save();
         $data_tanggapan->save();
 
-        return redirect()->to('petugas/pengaduan/' . $data_pengaduan->id)->with('success', 'Pengaduan berhasil ditanggapi');
+        Alert::success('Berhasil!', 'Pengaduan berhasil ditanggapi!');
+        return redirect()->to('petugas/pengaduan/' . $data_pengaduan->id);
     }   
 }

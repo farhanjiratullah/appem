@@ -8,7 +8,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/pengaduan">
+            <a class="nav-link" href="/buat-laporan">
               <span data-feather="file"></span>
               Buat Laporan
             </a>
