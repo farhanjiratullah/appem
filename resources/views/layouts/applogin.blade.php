@@ -11,7 +11,7 @@
     <!-- Bootstrap core CSS -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 {{-- <link rel="stylesheet" href="css/sweetalert.css"> --}}
-{{-- <script src="vendor/sweetalert/sweetalert.all.js"></script> --}}
+<script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
 
     <!-- Favicons -->
 {{-- <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">

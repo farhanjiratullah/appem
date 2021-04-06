@@ -15,9 +15,19 @@ class PetugasController extends Controller
         return view('petugas.index', compact('data_pengaduan', 'data_masyarakat', 'data_petugas'));
     }
 
-    public function tampilPengaduan() {
+    public function tampilPengaduan(Request $request) {
+        $this->validate($request, [
+            'limit' => 'integer',
+        ]);
+
+        $search = Pengaduan::with('masyarakat')->when($request->keyword, function ($query) use ($request) {
+            $query->where('masyarakat_nik', 'like', "%{$request->keyword}%")
+                ->orWhere('status', 'like', "%{$request->keyword}%");
+        })->orderBy('id', 'desc')->paginate($request->limit ? $request->limit : 10);
+        $search->appends($request->only('keyword', 'limit'));
         $data_pengaduan = Pengaduan::with('masyarakat')->get();
-        return view('petugas.pengaduan', compact('data_pengaduan'));
+
+        return view('petugas.pengaduan', compact('data_pengaduan', 'search'));
     }
 
     public function detailPengaduan($id) {
@@ -42,14 +52,33 @@ class PetugasController extends Controller
         return redirect()->back();
     }
 
-    public function tampilAkun() {
+    public function tampilAkun(Request $request) {
+        $this->validate($request, [
+            'limit' => 'integer',
+        ]);
+        
+        $search = Petugas::when($request->keyword, function ($query) use ($request) {
+            $query->where('nama_petugas', 'like', "%{$request->keyword}%")
+                ->orWhere('username', 'like', "%{$request->keyword}%");
+        })->orderBy('id', 'desc')->paginate($request->limit ? $request->limit : 10);
+        $search->appends($request->only('keyword', 'limit'));
         $data_akun = Petugas::get();
-        return view('petugas.akun', compact('data_akun'));
+
+        return view('petugas.akun', compact('data_akun', 'search'));
     }
 
-    public function tampilAkunMasyarakat() {
+    public function tampilAkunMasyarakat(Request $request) {
+        $this->validate($request, [
+            'limit' => 'integer',
+        ]);
+        $search = Masyarakat::when($request->keyword, function ($query) use ($request) {
+            $query->where('nik', 'like', "%{$request->keyword}%")
+                ->orWhere('username', 'like', "%{$request->keyword}%");
+        })->orderBy('nik', 'desc')->paginate($request->limit ? $request->limit : 10);
+        $search->appends($request->only('keyword', 'limit'));
         $data_akunMasyarakat = Masyarakat::get();
-        return view('petugas.akunmasyarakat', compact('data_akunMasyarakat'));
+
+        return view('petugas.akunmasyarakat', compact('data_akunMasyarakat', 'search'));
     }
 
     public function destroyAkunMasyarakat($nik) {

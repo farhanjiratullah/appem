@@ -35,6 +35,9 @@
                     {{-- </a>              --}}
                 </div>               
             @endforeach
+            @if( $data_pengaduan->count() < 1 )
+                <p class="text-center fs-6">Tidak ada laporan</h4>
+            @endif
         </div>
     </div>
 @endsection

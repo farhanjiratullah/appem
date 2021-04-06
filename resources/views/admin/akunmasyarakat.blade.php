@@ -5,6 +5,18 @@
 @section('content')
     <h1 class="mb-3 text-center">Akun Masyarakat</h1>   
 
+    <form action="{{ url()->current() }}" method="get">
+      <div class="row">
+        <div class="col-md-6">
+            {{-- <input type="text" name="keyword" class="form-control" placeholder="Cari petugas..."> --}}
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Cari masyarakat.." aria-label="Cari masyarakat..." aria-describedby="button-addon2" name="keyword">
+              <button class="btn btn-outline-primary" type="submit" id="button-addon2">Cari</button>
+            </div>
+        </div>
+      </div>
+    </form>
+
     <div class="table-responsive">
       <table class="table table-striped table-sm">
         <thead>
@@ -18,19 +30,19 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($data_akunMasyarakat as $akun)
+          @foreach ($search as $s)
               <tr class="text-center">
-                  <td>{{ $loop->iteration }}</td>
-                  <td>{{ $akun->nik }}</td>
-                  <td>{{ $akun->nama }}</td>
-                  <td>{{ $akun->username }}</td>
-                  <td>{{ $akun->telp }}</td>
+                  <td>{{ ($search->currentpage()-1) * $search->perpage() + $loop->index + 1 }}</td>
+                  <td>{{ $s->nik }}</td>
+                  <td>{{ $s->nama }}</td>
+                  <td>{{ $s->username }}</td>
+                  <td>{{ $s->telp }}</td>
                   <td>
-                    <form action="{{ route('admin.destroyakunmasyarakat', $akun->nik) }}" method="post" id="delete{{ $akun->nik }}">
+                    <form action="{{ route('admin.destroyakunmasyarakat', $s->nik) }}" method="post" id="delete{{ $s->nik }}">
                       @csrf
                       @method('delete')
 
-                      <button type="button" href="" class="btn btn-danger btn-sm" onclick="deleteData({{ $akun->nik }})">
+                      <button type="button" href="" class="btn btn-danger btn-sm" onclick="deleteData({{ $s->nik }})">
                           <span data-feather="trash"></span> Hapus 
                       </button>
                     </form>
@@ -39,6 +51,10 @@
           @endforeach
         </tbody>
       </table>
+      @if( $search->count() < 1 )
+        <p class="text-center">Tidak ada masyarakat</p>
+      @endif
+      {{ $search->links() }}
     </div>
 @endsection
 
